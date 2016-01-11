@@ -1,0 +1,39 @@
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+   # artemis server 1
+   config.vm.define "artemis1" do |artemis1|
+
+	artemis1.vm.box = "ubuntu/trusty64"
+	artemis1.vm.hostname = "artemis1"
+#	artemis1.vm.network "public_network", ip: "10.0.3.101", :bridge => "lxcbr0"
+	artemis1.vm.network "private_network", ip: "192.168.0.101"
+	artemis1.vm.network "forwarded_port", guest: 8161, host: 18161
+	artemis1.vm.network "forwarded_port", guest: 61618, host: 16161
+	artemis1.vm.network "forwarded_port", guest: 9876, host: 19876, protocol: 'udp'
+	artemis1.vm.provision :shell, :path => "install-node.sh"
+	artemis1.vm.provider "virtualbox" do |v|
+                 v.memory = 3072 
+                 v.cpus = 2
+         end
+   end
+
+   # artemis server 2
+   config.vm.define "artemis2" do |artemis2|
+
+	artemis2.vm.box = "ubuntu/trusty64"
+	artemis2.vm.hostname = "artemis2"
+#	artemis2.vm.network "public_network", ip: "10.0.3.102", :bridge => "lxcbr0"
+	artemis2.vm.network "private_network", ip: "192.168.0.102"
+	artemis2.vm.provision :shell, :path => "install-node.sh"
+	artemis2.vm.provider "virtualbox" do |v|
+                 v.memory = 3072 
+                 v.cpus = 2
+         end
+   end
+
+end
+
+
+
