@@ -10,7 +10,7 @@ public class Producer {
 		
 		Thread thread = new Thread(runner);
 		
-		thread.run();
+		thread.start();
 		
 	}
 	
