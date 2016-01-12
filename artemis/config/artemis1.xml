@@ -15,15 +15,17 @@
         </ha-policy>
 
         <connectors>
-        		<connector name="netty-connector">tcp://192.168.0.101:61618</connector>
+        		<connector name="netty-connector">tcp://10.0.3.101:61618</connector>
         </connectors>
 
       <acceptors>
-         <acceptor name="netty-acceptor">tcp://192.168.0.101:61618</acceptor>
+         <acceptor name="netty-acceptor">tcp://10.0.3.101:61618</acceptor>
       </acceptors>
 
         <broadcast-groups>
                 <broadcast-group name="broadcastgroup1">
+                		<local-bind-address>10.0.3.101</local-bind-address>
+                		<local-bind-port>5432</local-bind-port>
                         <group-address>231.7.7.7</group-address>
                         <group-port>9876</group-port>
                         <broadcast-period>100</broadcast-period>

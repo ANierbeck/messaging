@@ -2,7 +2,6 @@
 
 sudo apt-get update
 
-
 # install java 7
 sudo apt-get -y install openjdk-7-jre
 
@@ -27,14 +26,12 @@ cd /opt/artemis/apache-artemis-1.2.0/
 # create a broker
 sudo ./bin/artemis create --allow-anonymous  --password admin --user admin --directory /etc/broker --host 0.0.0.0 --force
 
-
 ### adjust configuration
 
 # replace "localhost" with "0.0.0.0" for external port forwarding
 sudo sed -i 's/localhost/0.0.0.0/g' /etc/broker/etc/bootstrap.xml
 
 #sudo sed -i 's/logger\.level=INFO/logger\.level=DEBUG/g' /etc/broker/etc/logging.properties
-
 
 sudo cp /vagrant/config/$HOSTNAME.xml /etc/broker/etc/broker.xml
 
@@ -45,4 +42,10 @@ fi
 
 # restart the broker
 #sudo "/etc/broker/bin/artemis" stop &
-#sudo "/etc/broker/bin/artemis" run &
+sudo "/etc/broker/bin/artemis" run &
+
+# START:
+# sudo "/etc/broker/bin/artemis" run &
+# KILL:
+# sudo kill -9 $(ps -aef | grep "apache-artemis-1.2.0" | grep root | cut -d " " -f 7)
+

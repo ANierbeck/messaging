@@ -3,3 +3,4 @@ apache-artemis-1.2.0/*
 vagrant
 tmp/*
 .vagrant
+*.class

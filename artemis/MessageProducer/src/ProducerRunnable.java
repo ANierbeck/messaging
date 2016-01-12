@@ -19,11 +19,26 @@ import org.apache.activemq.artemis.jms.client.ActiveMQConnectionFactory;
 
 
 
-
+/**
+ * 
+ * @author tobias
+ *
+ */
 public class ProducerRunnable implements Runnable {
+	
+	/* set this to the IP address which is in the broker network (for udp broadcast) */
+	private static final String LOCAL_LISTEN_IP = "10.0.3.1";
+	
+	/* the UDP broadcast IP */
+	private static final String UDP_GROUP_ADDRESS = "231.7.7.7";
+	
+	/* the UDP broadcast port */
+	private static final int UDP_GROUP_PORT = 9876; 
 	
 	private Connection connection;
 	private Session session;
+	
+	/* create a randomly unique named queue for each test run */
 	private Queue queue = ActiveMQJMSClient.createQueue("test.test." + 
 			new BigInteger(130, new SecureRandom()).toString(32));
 		
@@ -32,8 +47,9 @@ public class ProducerRunnable implements Runnable {
 		/* create a UDP discovery group */
 		UDPBroadcastEndpointFactory udpCfg = new UDPBroadcastEndpointFactory();
 		udpCfg
-			.setGroupAddress("231.7.7.7")
-			.setGroupPort(9876);
+			.setGroupAddress(UDP_GROUP_ADDRESS)
+			.setGroupPort(UDP_GROUP_PORT)
+			.setLocalBindAddress(LOCAL_LISTEN_IP);
 		
 		DiscoveryGroupConfiguration groupConfiguration = new DiscoveryGroupConfiguration();
 		groupConfiguration.setBroadcastEndpointFactory(udpCfg);
@@ -48,7 +64,7 @@ public class ProducerRunnable implements Runnable {
 		
 		/* wait a short period for discovery */
 		System.out.println("waiting for discovery");
-		Thread.sleep(2000);
+		Thread.sleep(1000);
 		
 		/* create a connection */
 		connection = cf.createConnection("admin", "admin");
@@ -76,16 +92,14 @@ public class ProducerRunnable implements Runnable {
 				
 				String messageText = "msg_" + counter;
 				
-				System.out.println("sending message: " + messageText);
+				System.out.print("sending: " + messageText + " ");
 				
 				/* create a text message and send it to the broker */
 				TextMessage message = session.createTextMessage(messageText);	
 				producer.send(message);
-					
-				System.out.println("receiving message...");	
-				
+			
 				/* wait a short time */
-				Thread.sleep(1000);
+//				Thread.sleep(1000);
 				
 				/* read the message from the server */
 				TextMessage received = (TextMessage)consumer.receive();
@@ -95,21 +109,20 @@ public class ProducerRunnable implements Runnable {
 				
 				/* extract the content of the received message */
 				String resp = received.getText();
-				
-				System.out.println(resp);
-				
+
+				System.out.print("expecting: " + messageText + " ");
 				/* compare the received message with the expected one */
 				if(resp.equals(messageText)) {
 					System.out.println("OK");
 				} else {
-					System.out.println(messageText);
+					System.out.println("received: " + messageText);
 					
 					/* exit if message is wrong */
 					throw new Exception("RECEIVED WRONG MESSAGE!!!");
 					
 				}
 				
-				Thread.sleep(1000);
+				Thread.sleep(200);
 				++counter;
 			}
 		} catch(Exception e) {
