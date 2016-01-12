@@ -2,38 +2,37 @@
 
 <configuration xmlns="urn:activemq"
                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-               xsi:schemaLocation="urn:activemq /schema/artemis-configuration.xsd">
+               xsi:schemaLocation="urn:activemq /schema/artemis-configuration.xsd">     
 
    <core xmlns="urn:activemq:core">
 
         <ha-policy>
                 <replication>
-                        <slave>
-                        	<allow-failback>true</allow-failback>
-                        </slave>
+                        <master>
+                        	<check-for-live-server>true</check-for-live-server>
+                        </master>
                 </replication>
         </ha-policy>
 
         <connectors>
-        	<connector name="netty-connector-live">tcp://10.0.3.101:61618</connector>
-			<connector name="netty-connector">tcp://10.0.3.102:61618</connector>
+        		<connector name="netty-connector">tcp://10.0.3.104:61618</connector>
         </connectors>
 
       <acceptors>
-         <acceptor name="netty-acceptor">tcp://10.0.3.102:61618</acceptor>
+         <acceptor name="netty-acceptor">tcp://10.0.3.104:61618</acceptor>
       </acceptors>
 
-	<broadcast-groups>
+        <broadcast-groups>
                 <broadcast-group name="broadcastgroup1">
-                        <local-bind-address>10.0.3.102</local-bind-address>
-			<local-bind-port>5432</local-bind-port>
+                        <local-bind-address>10.0.3.104</local-bind-address>
+                        <local-bind-port>5432</local-bind-port>
                         <group-address>231.7.7.7</group-address>
                         <group-port>9876</group-port>
                         <broadcast-period>100</broadcast-period>
                         <connector-ref>netty-connector</connector-ref>
                 </broadcast-group>
         </broadcast-groups>
-
+        
         <discovery-groups>
                 <discovery-group name="discoverygroup1">
                         <group-address>231.7.7.7</group-address>
@@ -68,7 +67,7 @@
       	<journal-directory>/etc/broker/data/journal</journal-directory>
       	<large-messages-directory>/etc/broker/data/large-messages</large-messages-directory>
       	<journal-min-files>10</journal-min-files>
-      	<journal-buffer-timeout>252000</journal-buffer-timeout>
+ 		<journal-buffer-timeout>252000</journal-buffer-timeout>
 
       <security-settings>
         <security-setting match="#">
@@ -81,7 +80,6 @@
             <permission type="manage" roles="exit"/>
          </security-setting>
       </security-settings>
-
 
    </core>
 </configuration>

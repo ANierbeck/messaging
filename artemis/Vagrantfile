@@ -10,7 +10,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	artemis1.vm.network "public_network", ip: "10.0.3.101", :bridge => "lxcbr0"
 	artemis1.vm.provision :shell, :path => "install-node.sh"
 	artemis1.vm.provider "virtualbox" do |v|
-                 v.memory = 1024 
+                 v.memory = 2048
                  v.cpus = 2
          end
    end
@@ -23,7 +23,34 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	artemis2.vm.network "public_network", ip: "10.0.3.102", :bridge => "lxcbr0"
 	artemis2.vm.provision :shell, :path => "install-node.sh"
 	artemis2.vm.provider "virtualbox" do |v|
-                 v.memory = 1024 
+                 v.memory = 2048 
+                 v.cpus = 2
+         end
+   end
+
+   # artemis server 3
+   config.vm.define "artemis3" do |artemis3|
+
+	artemis3.vm.box = "ubuntu/trusty64"
+	artemis3.vm.hostname = "artemis3"
+	artemis3.vm.network "public_network", ip: "10.0.3.103", :bridge => "lxcbr0"
+	artemis3.vm.provision :shell, :path => "install-node.sh"
+	artemis3.vm.provider "virtualbox" do |v|
+                 v.memory = 2048 
+                 v.cpus = 2
+         end
+   end
+
+
+   # artemis server 4
+   config.vm.define "artemis4" do |artemis4|
+
+	artemis4.vm.box = "ubuntu/trusty64"
+	artemis4.vm.hostname = "artemis3"
+	artemis4.vm.network "public_network", ip: "10.0.3.104", :bridge => "lxcbr0"
+	artemis4.vm.provision :shell, :path => "install-node.sh"
+	artemis4.vm.provider "virtualbox" do |v|
+                 v.memory = 2048 
                  v.cpus = 2
          end
    end

@@ -24,8 +24,8 @@
 
         <broadcast-groups>
                 <broadcast-group name="broadcastgroup1">
-                		<local-bind-address>10.0.3.101</local-bind-address>
-                		<local-bind-port>5432</local-bind-port>
+                        <local-bind-address>10.0.3.101</local-bind-address>
+                        <local-bind-port>5432</local-bind-port>
                         <group-address>231.7.7.7</group-address>
                         <group-port>9876</group-port>
                         <broadcast-period>100</broadcast-period>
@@ -45,6 +45,14 @@
                 <cluster-connection name="clusterconnection1">
                         <address>jms</address>
                         <connector-ref>netty-connector</connector-ref>
+                        <check-period>1000</check-period>
+                        <retry-interval>500</retry-interval>
+                        <retry-interval-multiplier>1.0</retry-interval-multiplier>
+                        <max-retry-interval>5000</max-retry-interval>
+                        <initial-connect-attempts>-1</initial-connect-attempts>
+                        <reconnect-attempts>-1</reconnect-attempts>
+                        <use-duplicate-detection>true</use-duplicate-detection>
+                        <message-load-balancing>STRICT</message-load-balancing>
                         <discovery-group-ref discovery-group-name="discoverygroup1"/>
                 </cluster-connection>
         </cluster-connections>

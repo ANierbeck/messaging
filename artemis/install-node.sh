@@ -4,6 +4,7 @@ sudo apt-get update
 
 # install java 7
 sudo apt-get -y install openjdk-7-jre
+sudo apt-get install htop
 
 if [ ! -f /vagrant/tmp/artemis.tar.gz ] 
 then
