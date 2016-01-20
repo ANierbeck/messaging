@@ -40,7 +40,7 @@ sudo sed -i 's/localhost/0.0.0.0/g' /etc/broker/etc/bootstrap.xml
 
 #sudo sed -i 's/logger\.level=INFO/logger\.level=DEBUG/g' /etc/broker/etc/logging.properties
 
-sudo cp config/amazon$1.xml /etc/broker/etc/broker.xml
+sudo cp /home/ubuntu/messaging/artemis/config/amazon$1.xml /etc/broker/etc/broker.xml
 
 # restart the broker
 #sudo "/etc/broker/bin/artemis" stop &
