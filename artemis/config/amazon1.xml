@@ -1,0 +1,74 @@
+<?xml version='1.0'?>
+
+<configuration xmlns="urn:activemq"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="urn:activemq /schema/artemis-configuration.xsd">     
+
+   <jms xmlns="urn:activemq:jms">
+      <!--the queue used by the example-->
+      <queue name="queue.performance.througput"/>
+   </jms>
+
+   <core xmlns="urn:activemq:core">
+
+        <ha-policy>
+                <replication>
+                        <master>
+                        	<check-for-live-server>true</check-for-live-server>
+                        </master>
+                </replication>
+        </ha-policy>
+
+        <connectors>
+        		<connector name="netty-connector">tcp://10.0.3.111:61618</connector>
+        		<connector name="amazon2">tcp://10.0.3.112:61618</connector>
+        </connectors>
+
+        <acceptors>
+                <acceptor name="netty-acceptor">tcp://10.0.3.111:61618</acceptor>
+        </acceptors>
+
+        <cluster-connections>
+                <cluster-connection name="clusterconnection1">
+                        <address>jms</address>
+                        <connector-ref>netty-connector</connector-ref>
+                        <check-period>1000</check-period>
+                        <retry-interval>500</retry-interval>
+                        <retry-interval-multiplier>1.0</retry-interval-multiplier>
+                        <max-retry-interval>5000</max-retry-interval>
+                        <initial-connect-attempts>-1</initial-connect-attempts>
+                        <reconnect-attempts>-1</reconnect-attempts>
+                        <use-duplicate-detection>true</use-duplicate-detection>
+                        <message-load-balancing>STRICT</message-load-balancing>
+                        <static-connectors>
+                                <connector-ref>amazon2</connector-ref>
+                        </static-connectors>
+                </cluster-connection>
+        </cluster-connections>
+
+        <cluster-user>ACTIVEMQ.CLUSTER.ADMIN.USER</cluster-user>
+        <cluster-password>admin</cluster-password>
+
+		<!--  ATTENTION: DO NOT USE RELATIVE PATHS THIS WILL LEAD TO FAILOVER ERRORS! http://activemq.2283324.n4.nabble.com/Artemis-Master-fails-to-start-up-after-failback-td4702910i20.html -->
+      	<journal-type>NIO</journal-type>
+      	<paging-directory>/etc/broker/data/paging</paging-directory>
+      	<bindings-directory>/etc/broker/data/bindings</bindings-directory>
+      	<journal-directory>/etc/broker/data/journal</journal-directory>
+      	<large-messages-directory>/etc/broker/data/large-messages</large-messages-directory>
+      	<journal-min-files>10</journal-min-files>
+ 		<journal-buffer-timeout>252000</journal-buffer-timeout>
+
+      <security-settings>
+        <security-setting match="#">
+            <permission type="createNonDurableQueue" roles="exit"/>
+            <permission type="deleteNonDurableQueue" roles="exit"/>
+            <permission type="createDurableQueue" roles="exit"/>
+            <permission type="deleteDurableQueue" roles="exit"/>
+            <permission type="consume" roles="exit"/>
+            <permission type="send" roles="exit"/>
+            <permission type="manage" roles="exit"/>
+         </security-setting>
+      </security-settings>
+
+   </core>
+</configuration>

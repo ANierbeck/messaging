@@ -7,6 +7,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 	artemis1.vm.box = "ubuntu/trusty64"
 	artemis1.vm.hostname = "artemis1"
+	artemis1.vm.network "private_network", ip: "192.168.0.5"
 	artemis1.vm.network "public_network", ip: "10.0.3.101", :bridge => "lxcbr0"
 	artemis1.vm.provision :shell, :path => "install-node.sh"
 	artemis1.vm.provider "virtualbox" do |v|
@@ -50,6 +51,33 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	artemis4.vm.network "public_network", ip: "10.0.3.104", :bridge => "lxcbr0"
 	artemis4.vm.provision :shell, :path => "install-node.sh"
 	artemis4.vm.provider "virtualbox" do |v|
+                 v.memory = 2048 
+                 v.cpus = 2
+         end
+   end
+
+
+   # amazon instance 1
+   config.vm.define "amazon1" do |amazon1|
+
+	amazon1.vm.box = "ubuntu/trusty64"
+	amazon1.vm.hostname = "amazon1"
+	amazon1.vm.network "public_network", ip: "10.0.3.111", :bridge => "lxcbr0"
+	amazon1.vm.provision :shell, :path => "install-node.sh"
+	amazon1.vm.provider "virtualbox" do |v|
+                 v.memory = 2048 
+                 v.cpus = 2
+         end
+   end
+
+   # amazon instance 2
+   config.vm.define "amazon2" do |amazon2|
+
+	amazon2.vm.box = "ubuntu/trusty64"
+	amazon2.vm.hostname = "amazon2"
+	amazon2.vm.network "public_network", ip: "10.0.3.112", :bridge => "lxcbr0"
+	amazon2.vm.provision :shell, :path => "install-node.sh"
+	amazon2.vm.provider "virtualbox" do |v|
                  v.memory = 2048 
                  v.cpus = 2
          end
