@@ -3,6 +3,7 @@
 if [ $# == 0 ]
 then
         echo "ID fehlt: Bitte config-nummer angeben"
+        exit
 fi
 
 sudo apt-get update
