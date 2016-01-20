@@ -31,7 +31,7 @@ fi
 cd /opt/artemis/apache-artemis-1.2.0/
 
 # create a broker
-sudo ./bin/artemis create --allow-anonymous  --password admin --user admin --directory /etc/broker --host 0.0.0.0 --force
+sudo ./bin/artemis create --allow-anonymous  --password admin --user admin --directory /etc/broker --host 0.0.0.0 --force --role exit
 
 ### adjust configuration
 
