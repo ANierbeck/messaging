@@ -41,6 +41,8 @@ if [ ! $? == 0 ]; then
         sudo ip route add 224.0.0.0/4 dev eth1
 fi
 
+sudo sed -i 's/-classpath \"\$CLASSPATH\" \\/-classpath \"\$CLASSPATH\" -Xmx2096m -Xms2096m \\/g' /etc/broker/bin/artemis
+
 # restart the broker
 #sudo "/etc/broker/bin/artemis" stop &
 sudo "/etc/broker/bin/artemis" run &

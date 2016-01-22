@@ -42,6 +42,8 @@ sudo sed -i 's/localhost/0.0.0.0/g' /etc/broker/etc/bootstrap.xml
 
 sudo cp /home/ubuntu/messaging/artemis/config/amazon$1.xml /etc/broker/etc/broker.xml
 
+sudo sed -i 's/-classpath \"\$CLASSPATH\" \\/-classpath \"\$CLASSPATH\" -Xmx6144m -Xms6144m \\/g' /etc/broker/bin/artemis
+
 # restart the broker
 #sudo "/etc/broker/bin/artemis" stop &
 sudo "/etc/broker/bin/artemis" run &
