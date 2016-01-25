@@ -1,0 +1,11 @@
+#
+#Wed Jan 20 13:50:16 CET 2016
+connectTo=tcp://10.0.3.111:61618
+host2=tcp://10.0.3.112:61618
+messageSizeBytes=1024
+messagesPerThread=10000
+threadCount=4
+username=admin
+password=admin
+queueName=queue.performance.througput
+cleanupOnly=false

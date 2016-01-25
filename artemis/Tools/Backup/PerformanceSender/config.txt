@@ -1,0 +1,9 @@
+#
+server=tcp://10.0.3.111:61618
+
+username=admin
+password=admin
+messageSizeBytes=1024
+threadCount=8
+messagesPerThread=10000
+queueName=queue.performance.througput

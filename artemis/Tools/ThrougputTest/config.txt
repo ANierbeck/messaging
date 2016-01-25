@@ -1,0 +1,11 @@
+#
+#Wed Jan 20 13:50:16 CET 2016
+connectTo=tcp://172.31.20.90:61618
+host2=tcp://172.31.20.89:61618
+messageSizeBytes=1024
+messagesPerThread=10000
+threadCount=32
+username=admin
+password=admin
+queueName=queue.performance.througput
+cleanupOnly=true

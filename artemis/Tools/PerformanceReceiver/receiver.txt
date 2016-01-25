@@ -1,0 +1,15 @@
+#
+server0=tcp://10.0.3.111:61618
+server1=tcp://10.0.3.112:61618
+
+username=admin
+password=admin
+queueName=queue.performance.througput
+
+
+
+messageSizeBytes=1024
+messagesPerThread=10000
+threadCount=32
+
+cleanupOnly=true

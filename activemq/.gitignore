@@ -1,5 +1,5 @@
 test.jar
-apache-artemis-1.2.0/*
+apache-activemq-5.13.0/*
 vagrant
 tmp/*
 .vagrant

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="/home/tobias/work/messaging/activemq/apache-activemq-5.13.0/lib/activemq-broker-5.13.0.jar"/>
+	<classpathentry kind="lib" path="/home/tobias/work/messaging/activemq/apache-activemq-5.13.0/lib/activemq-client-5.13.0.jar"/>
+	<classpathentry kind="lib" path="/home/tobias/work/messaging/activemq/apache-activemq-5.13.0/lib/activemq-console-5.13.0.jar"/>
+	<classpathentry kind="lib" path="/home/tobias/work/messaging/activemq/apache-activemq-5.13.0/lib/activemq-jaas-5.13.0.jar"/>
+	<classpathentry kind="lib" path="/home/tobias/work/messaging/activemq/apache-activemq-5.13.0/lib/activemq-kahadb-store-5.13.0.jar"/>
+	<classpathentry kind="lib" path="/home/tobias/work/messaging/activemq/apache-activemq-5.13.0/lib/activemq-openwire-legacy-5.13.0.jar"/>
+	<classpathentry kind="lib" path="/home/tobias/work/messaging/activemq/apache-activemq-5.13.0/lib/activemq-protobuf-1.1.jar"/>
+	<classpathentry kind="lib" path="/home/tobias/work/messaging/activemq/apache-activemq-5.13.0/lib/activemq-spring-5.13.0.jar"/>
+	<classpathentry kind="lib" path="/home/tobias/work/messaging/activemq/apache-activemq-5.13.0/lib/activemq-web-5.13.0.jar"/>
+	<classpathentry kind="lib" path="/home/tobias/work/messaging/activemq/apache-activemq-5.13.0/lib/geronimo-j2ee-management_1.1_spec-1.0.1.jar"/>
+	<classpathentry kind="lib" path="/home/tobias/work/messaging/activemq/apache-activemq-5.13.0/lib/geronimo-jms_1.1_spec-1.1.1.jar"/>
+	<classpathentry kind="lib" path="/home/tobias/work/messaging/activemq/apache-activemq-5.13.0/lib/geronimo-jta_1.0.1B_spec-1.0.1.jar"/>
+	<classpathentry kind="lib" path="/home/tobias/work/messaging/activemq/apache-activemq-5.13.0/lib/hawtbuf-1.11.jar"/>
+	<classpathentry kind="lib" path="/home/tobias/work/messaging/activemq/apache-activemq-5.13.0/lib/jcl-over-slf4j-1.7.13.jar"/>
+	<classpathentry kind="lib" path="/home/tobias/work/messaging/activemq/apache-activemq-5.13.0/lib/slf4j-api-1.7.13.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

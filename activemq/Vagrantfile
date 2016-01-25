@@ -1,0 +1,34 @@
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+   # artemis server 1
+   config.vm.define "activemq1" do |activemq1|
+
+	activemq1.vm.box = "ubuntu/trusty64"
+	activemq1.vm.hostname = "activemq1"
+	activemq1.vm.network "public_network", ip: "10.0.3.101", :bridge => "lxcbr0"
+	activemq1.vm.provision :shell, :path => "install-node.sh"
+	activemq1.vm.provider "virtualbox" do |v|
+                 v.memory = 2048
+                 v.cpus = 2
+         end
+   end
+
+   # activemq2 server 2
+   config.vm.define "activemq2" do |activemq2|
+
+	activemq2.vm.box = "ubuntu/trusty64"
+	activemq2.vm.hostname = "activemq2"
+	activemq2.vm.network "public_network", ip: "10.0.3.102", :bridge => "lxcbr0"
+	activemq2.vm.provision :shell, :path => "install-node.sh"
+	activemq2.vm.provider "virtualbox" do |v|
+                 v.memory = 2048 
+                 v.cpus = 2
+         end
+   end
+
+end
+
+
+

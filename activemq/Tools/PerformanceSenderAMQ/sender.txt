@@ -1,0 +1,10 @@
+#
+server=failover:(tcp://10.0.3.101:61616,tcp://10.0.3.102:61616)
+
+username=admin
+password=admin
+messageSizeBytes=1024
+threadCount=16
+messagesPerThread=10000
+queueName=queue.performance.througput
+persistent=false
