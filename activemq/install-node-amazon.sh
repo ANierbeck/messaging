@@ -12,44 +12,30 @@ sudo apt-get update
 sudo apt-get -y install openjdk-7-jre
 sudo apt-get install htop
 
-if [ ! -f /tmp/artemis.tar.gz ] 
+if [ ! -f /tmp/activemq.tar.gz ] 
 then
         # download artemis install file
-        sudo wget http://apache.lauf-forum.at/activemq/activemq-artemis/1.2.0/apache-artemis-1.2.0-bin.tar.gz -O /tmp/artemis.tar.gz
+        sudo wget http://apache.lauf-forum.at/activemq/5.13.0/apache-activemq-5.13.0-bin.tar.gz -O /tmp/activemq.tar.gz
 fi
 
-# create required folders
-sudo mkdir /etc/broker
 
-# unzip artemis
-if [ ! -d /opt/artemis ] 
+# unzip activemq
+if [ ! -d /opt/activemq ] 
 then
-        sudo mkdir /opt/artemis
-        sudo tar -xvf /tmp/artemis.tar.gz -C /opt/artemis
+        sudo mkdir /opt/activemq
+        sudo tar -xvf /tmp/activemq.tar.gz -C /opt/activemq
 fi
 
-cd /opt/artemis/apache-artemis-1.2.0/
+cd /opt/activemq/apache-activemq-5.13.0/
 
-# create a broker
-sudo ./bin/artemis create --allow-anonymous  --password admin --user admin --directory /etc/broker --host 0.0.0.0 --force --role exit
+sudo cp /home/ubuntu/messaging/activemq/config/amazon$1.xml /opt/activemq/apache-activemq-5.13.0/conf/activemq.xml
 
-### adjust configuration
+# increase heap
+sudo sed -i 's/Xms64M/Xms2096m/g' /opt/activemq/apache-activemq-5.13.0/bin/env
+sudo sed -i 's/Xmx1G/Xmx2096m/g' /opt/activemq/apache-activemq-5.13.0/bin/env
 
-# replace "localhost" with "0.0.0.0" for external port forwarding
-sudo sed -i 's/localhost/0.0.0.0/g' /etc/broker/etc/bootstrap.xml
 
-#sudo sed -i 's/logger\.level=INFO/logger\.level=DEBUG/g' /etc/broker/etc/logging.properties
 
-sudo cp /home/ubuntu/messaging/artemis/config/amazon$1.xml /etc/broker/etc/broker.xml
-
-sudo sed -i 's/-classpath \"\$CLASSPATH\" \\/-classpath \"\$CLASSPATH\" -Xmx6144m -Xms6144m \\/g' /etc/broker/bin/artemis
-
-# restart the broker
-#sudo "/etc/broker/bin/artemis" stop &
-sudo "/etc/broker/bin/artemis" run &
-
-# START:
-# sudo "/etc/broker/bin/artemis" run &
-# KILL:
-# sudo kill -9 $(ps -aef | grep "apache-artemis-1.2.0" | grep root | cut -d " " -f 7)
-
+# (re)start the broker
+sudo "/opt/activemq/apache-activemq-5.13.0/bin/activemq" stop
+sudo "/opt/activemq/apache-activemq-5.13.0/bin/activemq" start &

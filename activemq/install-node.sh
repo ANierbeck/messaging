@@ -25,7 +25,10 @@ cd /opt/activemq/apache-activemq-5.13.0/
 
 sudo cp /vagrant/config/$HOSTNAME.xml /opt/activemq/apache-activemq-5.13.0/conf/activemq.xml
 
-#sudo sed -i 's/-classpath \"\$CLASSPATH\" \\/-classpath \"\$CLASSPATH\" -Xmx2096m -Xms2096m \\/g' /etc/broker/bin/artemis
+# increase heap
+sudo sed -i 's/Xms64M/Xms2096m/g' /opt/activemq/apache-activemq-5.13.0/bin/env
+sudo sed -i 's/Xmx1G/Xmx2096m/g' /opt/activemq/apache-activemq-5.13.0/bin/env
+
 
 
 # (re)start the broker
