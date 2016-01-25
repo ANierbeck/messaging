@@ -21,7 +21,7 @@
 
 
 
-    <broker xmlns="http://activemq.apache.org/schema/core" brokerName="activemq1" dataDirectory="${activemq.data}">
+    <broker xmlns="http://activemq.apache.org/schema/core" brokerName="activemq2" dataDirectory="${activemq.data}">
 
         <networkConnectors>
                 <networkConnector uri="static:(tcp://10.0.3.101:61616)"/>
