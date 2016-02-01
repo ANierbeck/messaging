@@ -1,0 +1,52 @@
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+   # allow hostname resolution
+   config.vm.provision :hosts do |prov|
+	prov.add_host '10.0.3.101', ['rabbitmq1']
+	prov.add_host '10.0.3.102', ['rabbitmq2']
+
+   end
+
+   config.vm.box = 'ubuntu/trusty64'
+   if Vagrant.has_plugin?("vagrant-cachier")
+   	config.cache.scope = :box
+#	config.cache.synced_folder_opts = {
+#		type: :nfs,
+#		mount_options: ['rw', 'vers=3', 'tcp', 'nolock']
+#	}
+   end
+
+   # artemis server 1
+   config.vm.define "rabbitmq1" do |rabbitmq1|
+
+	rabbitmq1.vm.box = "ubuntu/trusty64"
+	rabbitmq1.vm.hostname = "rabbitmq1"
+	rabbitmq1.vm.network "public_network", ip: "10.0.3.101", :bridge => "lxcbr0"
+	rabbitmq1.vm.provision :shell, :path => "install-node.sh"
+	rabbitmq1.vm.provision :shell, :path => "config/rabbitmq1.sh"
+	rabbitmq1.vm.provider "virtualbox" do |v|
+                 v.memory = 2048
+                 v.cpus = 2
+         end
+   end
+
+   # rabbitmq2 server 2
+   config.vm.define "rabbitmq2" do |rabbitmq2|
+
+	rabbitmq2.vm.box = "ubuntu/trusty64"
+	rabbitmq2.vm.hostname = "activemq2"
+	rabbitmq2.vm.network "public_network", ip: "10.0.3.102", :bridge => "lxcbr0"
+	rabbitmq2.vm.provision :shell, :path => "install-node.sh"
+	rabbitmq2.vm.provision :shell, :path => "config/rabbitmq2.sh"
+	rabbitmq2.vm.provider "virtualbox" do |v|
+                 v.memory = 2048 
+                 v.cpus = 2
+         end
+   end
+
+end
+
+
+

@@ -1,0 +1,16 @@
+#
+server0=tcp://10.0.3.102:61616
+
+msgcount=50000
+
+hostname=10.0.3.101
+port=12345
+
+
+
+waitdelayms=300
+
+username=admin
+password=admin
+queueName=queue.performance.througput
+
