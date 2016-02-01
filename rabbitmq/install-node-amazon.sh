@@ -1,41 +1,40 @@
 #!/bin/bash
 
-if [ $# == 0 ]
-then
-        echo "ID fehlt: Bitte config-nummer angeben"
-        exit
-fi
+
+
+## AMAZON EDITION : : : :: :  ::  : ##
+#sudo /bin/su -c "echo 'echo 10.0.3.101 rabbitmq1' > /etc/hosts"
+#sudo /bin/su -c "echo 'echo 10.0.3.102 rabbitmq2' > /etc/hosts"
+## ::: : : .: ::: .:: .:: ::  ::  : ##
+
 
 sudo apt-get update
 
 # install java 7
-sudo apt-get -y install openjdk-7-jre
 sudo apt-get install htop
 
-if [ ! -f /tmp/activemq.tar.gz ] 
+sudo apt-get install -y rabbitmq-server
+
+if [ ! -f /tmp/rabbitmq_server.deb ] 
 then
-        # download artemis install file
-        sudo wget http://apache.lauf-forum.at/activemq/5.13.0/apache-activemq-5.13.0-bin.tar.gz -O /tmp/activemq.tar.gz
+        # download rabbitmq deb file
+        sudo wget https://packages.erlang-solutions.com/erlang/esl-erlang/FLAVOUR_1_general/esl-erlang_18.2-1~ubuntu~precise_amd64.deb -O /tmp/otp.deb
 fi
 
 
-# unzip activemq
-if [ ! -d /opt/activemq ] 
-then
-        sudo mkdir /opt/activemq
-        sudo tar -xvf /tmp/activemq.tar.gz -C /opt/activemq
-fi
-
-cd /opt/activemq/apache-activemq-5.13.0/
-
-sudo cp /home/ubuntu/messaging/activemq/config/amazon$1.xml /opt/activemq/apache-activemq-5.13.0/conf/activemq.xml
-
-# increase heap
-sudo sed -i 's/Xms64M/Xms2096m/g' /opt/activemq/apache-activemq-5.13.0/bin/env
-sudo sed -i 's/Xmx1G/Xmx2096m/g' /opt/activemq/apache-activemq-5.13.0/bin/env
+# install from deb file
+sudo dpkg -i /tmp/rabbitmq_server.deb
 
 
+# kill all running rabbitmq processes because I have no idea how to stop them correctly ...
+sudo pkill -f rabbitmq
+sudo pkill -f epmd
+
+
+
+
+# copy the "rabbitmq cookie", which is like a cluster name and must be identical across the cluster
+sudo /bin/su -c "echo 'IDUFSZKDKLDTBGQRFLAR' > /var/lib/rabbitmq/.erlang.cookie"
 
 # (re)start the broker
-sudo "/opt/activemq/apache-activemq-5.13.0/bin/activemq" stop
-sudo "/opt/activemq/apache-activemq-5.13.0/bin/activemq" start &
+sudo rabbitmq-server -detached
